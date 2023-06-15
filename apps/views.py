@@ -1,5 +1,6 @@
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
+from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from apps.serializers import CategorySerializer, ProductSerializer
@@ -30,3 +31,8 @@ class ProductModelViewSet(viewsets.ModelViewSet):
 class CategoryModelViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+
+    @swagger_auto_schema(manual_parameters=[category_id], )
+    @action(methods=['GET'], detail=False, url_path='hello')
+    def hello(self, request, pk=None):
+        return Response({'status': 'OK'})
